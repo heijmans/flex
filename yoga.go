@@ -102,7 +102,7 @@ type Node struct {
 	Context  interface{}
 
 	IsDirty      bool
-	hasNewLayout bool
+	HasNewLayout bool
 	NodeType     NodeType
 
 	resolvedDimensions [2]*Value
@@ -157,7 +157,7 @@ var (
 	nodeDefaults = Node{
 		Parent:             nil,
 		Children:           nil,
-		hasNewLayout:       true,
+		HasNewLayout:       true,
 		IsDirty:            false,
 		NodeType:           NodeTypeDefault,
 		resolvedDimensions: [2]*Value{&ValueUndefined, &ValueUndefined},
@@ -1363,7 +1363,7 @@ func zeroOutLayoutRecursivly(node *Node) {
 	node.Layout.cachedLayout.widthMeasureMode = MeasureModeExactly
 	node.Layout.cachedLayout.computedWidth = 0
 	node.Layout.cachedLayout.computedHeight = 0
-	node.hasNewLayout = true
+	node.HasNewLayout = true
 	childCount := len(node.Children)
 	for i := 0; i < childCount; i++ {
 		child := node.Children[i]
@@ -1609,7 +1609,7 @@ func nodelayoutImpl(node *Node, availableWidth float32, availableHeight float32,
 		child := node.Children[i]
 		if child.Style.Display == DisplayNone {
 			zeroOutLayoutRecursivly(child)
-			child.hasNewLayout = true
+			child.HasNewLayout = true
 			child.IsDirty = false
 			continue
 		}
@@ -2914,7 +2914,7 @@ func layoutNodeInternal(node *Node, availableWidth float32, availableHeight floa
 	if performLayout {
 		node.Layout.Dimensions[DimensionWidth] = node.Layout.measuredDimensions[DimensionWidth]
 		node.Layout.Dimensions[DimensionHeight] = node.Layout.measuredDimensions[DimensionHeight]
-		node.hasNewLayout = true
+		node.HasNewLayout = true
 		node.IsDirty = false
 	}
 
